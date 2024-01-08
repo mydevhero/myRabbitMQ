@@ -6,7 +6,7 @@ module.exports = {
   target: 'node',
   entry: './src/myRabbitMQ.ts', // Il punto di ingresso del tuo modulo
   output: {
-    filename: './dist/myRabbitMQ.js', // Il nome del file di output
+    filename: 'myRabbitMQ.js', // Il nome del file di output
 //    path: path.resolve(__dirname, 'dist'),
   },
   resolve: {
