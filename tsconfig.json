@@ -1,7 +1,7 @@
 {
   "compilerOptions": {
     "target": "es2022",
-    "module": "commonjs",
+    "module": "CommonJS",
     "strict": true,
     "esModuleInterop": true,
     "skipLibCheck": true,
@@ -10,8 +10,14 @@
     "baseUrl": "./src",
     "paths": {
       "*": ["node_modules/*", "src/types/*"]
-    }
+    },
+    "declaration": true,
+    "allowJs": true,
+    "emitDeclarationOnly": false,
+    "declarationMap": true
   },
-  "include": ["src/**/*.ts"],
+  "include": [
+    "src/**/*"
+  ],
   "exclude": ["node_modules"]
 }

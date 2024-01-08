@@ -1,16 +1,3 @@
-import amqp, { credentials, Connection, ConfirmChannel, Replies } from 'amqplib';
-
-const timeout = 250;
-const ttl = 60000;
-const prefetch=20;
-const port=5672;
-const durable_queue=true;
-const durable_exchange=true;
-const exchange_name = 'exchange';
-const exchange_type='fanout';
-const queue_name = '';
-var DEBUG=false;
-
 type cb_t = (data: any) => void;
 type hostname_t = string;
 type port_t = number;
@@ -57,6 +44,19 @@ interface myRabbitMQ_opts_i {
   publish_opts?: publish_opts_t;
   consume_opts?: consume_opts_t;
 }
+
+import amqp, { credentials, Connection, ConfirmChannel, Replies } from 'amqplib';
+
+const timeout = 250;
+const ttl = 60000;
+const prefetch=20;
+const port=5672;
+const durable_queue=true;
+const durable_exchange=true;
+const exchange_name = 'exchange';
+const exchange_type='fanout';
+const queue_name = '';
+var DEBUG=false;
 
 class myRabbitMQ {
   #context!: context_t;
@@ -550,4 +550,4 @@ class myRabbitMQProducer extends myRabbitMQ {
 }
 
 
-export {myRabbitMQConsumer, myRabbitMQProducer, myRabbitMQ_opts_i};
+export {myRabbitMQConsumer, myRabbitMQProducer};
