@@ -12,8 +12,6 @@
       "*": ["node_modules/*", "src/types/*"]
     },
     "declaration": true,
-    "allowJs": false,
-    "emitDeclarationOnly": false,
     "declarationMap": true
   },
   "include": [
