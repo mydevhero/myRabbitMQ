@@ -83,5 +83,5 @@ declare class myRabbitMQProducer extends myRabbitMQ {
     init(): Promise<ConfirmChannel>;
     produce(obj: any, cb?: cb_t): Promise<any>;
 }
-export { myRabbitMQConsumer, myRabbitMQProducer };
+export { myRabbitMQConsumer, myRabbitMQProducer, myRabbitMQ_opts_i };
 //# sourceMappingURL=myRabbitMQ.d.ts.map
