@@ -34,7 +34,8 @@
     "webpack-dev-server": "^4.15.1"
   },
   "dependencies": {
-    "amqplib": "^0.10.3"
+    "amqplib": "^0.10.3",
+    "tsconfig-paths-webpack-plugin": "^4.1.0"
   },
   "webpack": {
     "config": "webpack.config.js"
