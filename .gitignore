@@ -16,3 +16,5 @@ src/js/**/*.js
 coverage
 
 package-lock.json
+
+secret
