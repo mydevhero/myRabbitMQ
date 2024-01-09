@@ -3,7 +3,7 @@ const TsconfigPathsPlugin = require('tsconfig-paths-webpack-plugin');
 
 module.exports = {
   mode: "production",
-  target: "node",
+  target: "async-node",
   entry: './src/myRabbitMQ.ts', // Il punto di ingresso del tuo modulo
   output: {
     filename: 'myRabbitMQ.js', // Il nome del file di output
