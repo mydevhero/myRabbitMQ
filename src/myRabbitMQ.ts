@@ -549,4 +549,4 @@ class myRabbitMQProducer extends myRabbitMQ {
   }
 }
 
-export {myRabbitMQConsumer, myRabbitMQProducer, myRabbitMQ_opts_i};
+module.exports={myRabbitMQConsumer, myRabbitMQProducer};
