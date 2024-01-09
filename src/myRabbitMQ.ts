@@ -21,7 +21,7 @@ type publish_opts_t = any;
 type consume_opts_t = any;
 type context_t = string;
 
-interface myRabbitMQ_opts_i {
+interface myRabbitMQ_i {
   hostname?: hostname_t;
   port?: port_t;
   username?: username_t;
@@ -86,9 +86,9 @@ class myRabbitMQ {
   #sendToQueue_opts!: sendToQueue_opts_t;
   #publish_opts!: publish_opts_t;
   #myRabbitMQ_is_running!: boolean;
-  #fnopts?: myRabbitMQ_opts_i;
+  #fnopts?: myRabbitMQ_i;
 
-  constructor (context:context_t, fnopts?: myRabbitMQ_opts_i) {
+  constructor (context:context_t, fnopts?: myRabbitMQ_i) {
     this.#context = context;
     this.#fnopts = fnopts;
   }
@@ -401,7 +401,7 @@ class myRabbitMQ {
 }
 
 class myRabbitMQConsumer extends myRabbitMQ {
-  constructor(context:context_t, fnopts?: myRabbitMQ_opts_i,cb?:cb_t) {
+  constructor(context:context_t, fnopts?: myRabbitMQ_i,cb?:cb_t) {
     super(context, fnopts);
 
     if(typeof cb!='undefined')
@@ -464,7 +464,7 @@ class myRabbitMQConsumer extends myRabbitMQ {
 }
 
 class myRabbitMQProducer extends myRabbitMQ {
-  constructor(context:context_t, fnopts?: myRabbitMQ_opts_i,obj?:any, cb?:cb_t) {
+  constructor(context:context_t, fnopts?: myRabbitMQ_i,obj?:any, cb?:cb_t) {
     super(context, fnopts);
 
     if(typeof obj!='undefined' && typeof cb!='undefined')
@@ -549,4 +549,4 @@ class myRabbitMQProducer extends myRabbitMQ {
   }
 }
 
-module.exports={myRabbitMQConsumer, myRabbitMQProducer};
+export {myRabbitMQConsumer, myRabbitMQProducer, myRabbitMQ_i};
