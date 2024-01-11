@@ -340,8 +340,6 @@ class myRabbitMQ {
         if (typeof this.#queue === 'undefined')
           reject(`${this.context}: myRabbitMQ.queue(): Can't assert queue`);
 
-        console.log(this.routingKey,' - ', this.topicKey)
-
         resolve(this.#queue);
       } catch(error) {
         console.error(error);
@@ -430,9 +428,7 @@ class myRabbitMQConsumer extends myRabbitMQ {
 
         const channel = await this.channel();
         const queue = await this.queue();
-        const exchange = await this.exchange();
-
-        console.log(3, exchange, 4, queue, 5, channel)
+        await this.exchange();
 
         await channel.consume(queue.queue, async (message) => {
           console.log(`${this.context}: myRabbitMQConsumer.consume()->consume() - working on message...`);
@@ -502,7 +498,7 @@ class myRabbitMQProducer extends myRabbitMQ {
 
         const channel = await this.channel();
         const queue = await this.queue();
-        const exchange = await this.exchange();
+        await this.exchange();
 
         if(this.exchange_type==='fanout') {
           channel.sendToQueue(queue.queue, Buffer.from(message), this.sendToQueue_opts, async (error) => {

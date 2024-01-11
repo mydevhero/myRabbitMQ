@@ -290,7 +290,6 @@ class myRabbitMQ {
                 }
                 if (typeof __classPrivateFieldGet(this, _myRabbitMQ_queue, "f") === 'undefined')
                     reject(`${this.context}: myRabbitMQ.queue(): Can't assert queue`);
-                console.log(this.routingKey, ' - ', this.topicKey);
                 resolve(__classPrivateFieldGet(this, _myRabbitMQ_queue, "f"));
             }
             catch (error) {
@@ -364,8 +363,7 @@ class myRabbitMQConsumer extends myRabbitMQ {
                     await this.init();
                 const channel = await this.channel();
                 const queue = await this.queue();
-                const exchange = await this.exchange();
-                console.log(3, exchange, 4, queue, 5, channel);
+                await this.exchange();
                 await channel.consume(queue.queue, async (message) => {
                     console.log(`${this.context}: myRabbitMQConsumer.consume()->consume() - working on message...`);
                     let obj;
@@ -427,7 +425,7 @@ class myRabbitMQProducer extends myRabbitMQ {
                     reject(`${this.context}: myRabbitMQProducer.produce() - No message`);
                 const channel = await this.channel();
                 const queue = await this.queue();
-                const exchange = await this.exchange();
+                await this.exchange();
                 if (this.exchange_type === 'fanout') {
                     channel.sendToQueue(queue.queue, Buffer.from(message), this.sendToQueue_opts, async (error) => {
                         console.log(`${this.context}: myRabbitMQProducer.produce()->sendToQueue() - working on message...`);
