@@ -21,7 +21,7 @@ type publish_opts_t = any;
 type consume_opts_t = any;
 type context_t = string;
 
-export interface myRabbitMQ_i {
+interface myRabbitMQ_i {
   hostname?: hostname_t;
   port?: port_t;
   username?: username_t;
@@ -364,6 +364,35 @@ class myRabbitMQ {
           console.log(`${this.context}: myRabbitMQ.exchange() - exchange asserted:`);
           if(DEBUG===true) console.debug(this.#channel);
 
+/*          this.#exchange.on('declare', (error: any) => {
+            console.error(`${this.context}: myRabbitMQ.connection() - connection error, restart myRabbitMQ.setup()`);
+            reject(error);
+          });
+
+          this.#exchange.on('delete', (error: any) => {
+            console.error(`${this.context}: myRabbitMQ.connection() - connection error, restart myRabbitMQ.setup()`);
+            reject(error);
+          });
+
+
+          this.#exchange.on('bind', (error: any) => {
+            console.error(`${this.context}: myRabbitMQ.connection() - connection error, restart myRabbitMQ.setup()`);
+            reject(error);
+          });
+
+          this.#exchange.on('unbind', (error: any) => {
+            console.error(`${this.context}: myRabbitMQ.connection() - connection error, restart myRabbitMQ.setup()`);
+            reject(error);
+          });
+
+
+          this.#exchange.on('error', (error: any) => {
+            console.error(`${this.context}: myRabbitMQ.connection() - connection error, restart myRabbitMQ.setup()`);
+            reject(error);
+          });
+*/
+
+
         }
 
         if (typeof this.#exchange === 'undefined')
@@ -400,7 +429,7 @@ class myRabbitMQ {
   }
 }
 
-export class myRabbitMQConsumer extends myRabbitMQ {
+class myRabbitMQConsumer extends myRabbitMQ {
   constructor(context:context_t, fnopts?: myRabbitMQ_i,cb?:cb_t) {
     super(context, fnopts);
 
@@ -463,7 +492,7 @@ export class myRabbitMQConsumer extends myRabbitMQ {
   }
 }
 
-export class myRabbitMQProducer extends myRabbitMQ {
+class myRabbitMQProducer extends myRabbitMQ {
   constructor(context:context_t, fnopts?: myRabbitMQ_i,obj?:any, cb?:cb_t) {
     super(context, fnopts);
 
@@ -549,4 +578,4 @@ export class myRabbitMQProducer extends myRabbitMQ {
   }
 }
 
-//export {myRabbitMQConsumer, myRabbitMQProducer, myRabbitMQ_i};
+export {myRabbitMQConsumer, myRabbitMQProducer, myRabbitMQ_i};

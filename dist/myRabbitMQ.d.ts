@@ -20,7 +20,7 @@ type sendToQueue_opts_t = any;
 type publish_opts_t = any;
 type consume_opts_t = any;
 type context_t = string;
-export interface myRabbitMQ_i {
+interface myRabbitMQ_i {
     hostname?: hostname_t;
     port?: port_t;
     username?: username_t;
@@ -73,15 +73,15 @@ declare class myRabbitMQ {
     protected exchange(value?: Replies.AssertExchange): Promise<Replies.AssertExchange>;
     protected setup(): Promise<ConfirmChannel>;
 }
-export declare class myRabbitMQConsumer extends myRabbitMQ {
+declare class myRabbitMQConsumer extends myRabbitMQ {
     constructor(context: context_t, fnopts?: myRabbitMQ_i, cb?: cb_t);
     init(): Promise<ConfirmChannel>;
     consume(cb?: cb_t): Promise<any>;
 }
-export declare class myRabbitMQProducer extends myRabbitMQ {
+declare class myRabbitMQProducer extends myRabbitMQ {
     constructor(context: context_t, fnopts?: myRabbitMQ_i, obj?: any, cb?: cb_t);
     init(): Promise<ConfirmChannel>;
     produce(obj: any, cb?: cb_t): Promise<any>;
 }
-export {};
+export { myRabbitMQConsumer, myRabbitMQProducer, myRabbitMQ_i };
 //# sourceMappingURL=myRabbitMQ.d.ts.map
