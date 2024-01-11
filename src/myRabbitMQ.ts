@@ -425,6 +425,9 @@ class myRabbitMQConsumer extends myRabbitMQ {
 
     return new Promise<any>(async (resolve, reject)=>{
       try{
+        if(this.myRabbitMQ_is_running===false)
+          await this.init();
+
         const channel = await this.channel();
         const queue = await this.queue();
         const exchange = await this.exchange();
@@ -488,6 +491,9 @@ class myRabbitMQProducer extends myRabbitMQ {
 
     return new Promise<any>(async (resolve,reject)=>{
       try{
+        if(this.myRabbitMQ_is_running===false)
+          await this.init();
+
         if(Object.entries(obj).length === 0) reject(`${this.context}: myRabbitMQProducer.produce() - No obj{}`);
 
         var message:string = JSON.stringify(obj);

@@ -360,6 +360,8 @@ class myRabbitMQConsumer extends myRabbitMQ {
         console.log(`${this.context}: myRabbitMQConsumer.consume() - run instance...`);
         return new Promise(async (resolve, reject) => {
             try {
+                if (this.myRabbitMQ_is_running === false)
+                    await this.init();
                 const channel = await this.channel();
                 const queue = await this.queue();
                 const exchange = await this.exchange();
@@ -416,6 +418,8 @@ class myRabbitMQProducer extends myRabbitMQ {
         console.log(`${this.context}: myRabbitMQProducer.produce() - run instance...`);
         return new Promise(async (resolve, reject) => {
             try {
+                if (this.myRabbitMQ_is_running === false)
+                    await this.init();
                 if (Object.entries(obj).length === 0)
                     reject(`${this.context}: myRabbitMQProducer.produce() - No obj{}`);
                 var message = JSON.stringify(obj);
