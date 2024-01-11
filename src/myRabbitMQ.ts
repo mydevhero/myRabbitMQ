@@ -21,7 +21,7 @@ type publish_opts_t = any;
 type consume_opts_t = any;
 type context_t = string;
 
-interface myRabbitMQ_i {
+export interface myRabbitMQ_i {
   hostname?: hostname_t;
   port?: port_t;
   username?: username_t;
@@ -429,7 +429,7 @@ class myRabbitMQ {
   }
 }
 
-class myRabbitMQConsumer extends myRabbitMQ {
+export class myRabbitMQConsumer extends myRabbitMQ {
   constructor(context:context_t, fnopts?: myRabbitMQ_i,cb?:cb_t) {
     super(context, fnopts);
 
@@ -492,7 +492,7 @@ class myRabbitMQConsumer extends myRabbitMQ {
   }
 }
 
-class myRabbitMQProducer extends myRabbitMQ {
+export class myRabbitMQProducer extends myRabbitMQ {
   constructor(context:context_t, fnopts?: myRabbitMQ_i,obj?:any, cb?:cb_t) {
     super(context, fnopts);
 
@@ -577,5 +577,3 @@ class myRabbitMQProducer extends myRabbitMQ {
     })
   }
 }
-
-export {myRabbitMQConsumer, myRabbitMQProducer, myRabbitMQ_i};
