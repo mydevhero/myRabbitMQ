@@ -5,14 +5,14 @@ type username_t = string;
 type password_t = string;
 type timeout_t = number;
 type url_t = string;
-type exchange_name_t = string;
-type exchange_type_t = 'direct' | 'fanout' | 'topic' | 'headers';
+type exchange_name_t = undefined | string;
+type exchange_type_t = undefined | 'direct' | 'fanout' | 'topic' | 'headers';
 type exchange_opts_t = any;
 type ttl_t = number;
 type prefetch_t = number;
 type durable_t = boolean;
 type connect_opts_t = any;
-type queue_name_t = string;
+type queue_name_t = undefined | string;
 type queue_opts_t = any;
 type routingKey_t = string;
 type topicKey_t = string;
@@ -20,6 +20,8 @@ type sendToQueue_opts_t = any;
 type publish_opts_t = any;
 type consume_opts_t = any;
 type context_t = string;
+type queue_t = undefined | Replies.AssertQueue;
+type exchange_t = undefined | Replies.AssertExchange;
 interface myRabbitMQ_i {
     hostname?: hostname_t;
     port?: port_t;
@@ -69,17 +71,17 @@ declare class myRabbitMQ {
     protected get sendToQueue_opts(): sendToQueue_opts_t;
     protected get publish_opts(): publish_opts_t;
     protected channel(value?: ConfirmChannel): Promise<ConfirmChannel>;
-    protected queue(value?: Replies.AssertQueue): Promise<Replies.AssertQueue>;
-    protected exchange(value?: Replies.AssertExchange): Promise<Replies.AssertExchange>;
+    protected queue(value?: Replies.AssertQueue): Promise<queue_t>;
+    protected exchange(value?: Replies.AssertExchange): Promise<exchange_t>;
     protected setup(): Promise<ConfirmChannel>;
 }
 declare class myRabbitMQConsumer extends myRabbitMQ {
-    constructor(context: context_t, fnopts?: myRabbitMQ_i, cb?: cb_t);
+    constructor(context: context_t, fnopts?: myRabbitMQ_i);
     init(): Promise<ConfirmChannel>;
     consume(cb?: cb_t): Promise<any>;
 }
 declare class myRabbitMQProducer extends myRabbitMQ {
-    constructor(context: context_t, fnopts?: myRabbitMQ_i, obj?: any, cb?: cb_t);
+    constructor(context: context_t, fnopts?: myRabbitMQ_i);
     init(): Promise<ConfirmChannel>;
     produce(obj: any, cb?: cb_t): Promise<any>;
 }

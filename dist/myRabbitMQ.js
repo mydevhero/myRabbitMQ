@@ -33,11 +33,11 @@ var __classPrivateFieldGet = (this && this.__classPrivateFieldGet) || function (
     if (typeof state === "function" ? receiver !== state || !f : !state.has(receiver)) throw new TypeError("Cannot read private member from an object whose class did not declare it");
     return kind === "m" ? f : kind === "a" ? f.call(receiver) : f ? f.value : state.get(receiver);
 };
-var _myRabbitMQ_context, _myRabbitMQ_hostname, _myRabbitMQ_port, _myRabbitMQ_username, _myRabbitMQ_password, _myRabbitMQ_timeout, _myRabbitMQ_url, _myRabbitMQ_exchange_name, _myRabbitMQ_exchange_type, _myRabbitMQ_exchange_opts, _myRabbitMQ_ttl, _myRabbitMQ_prefetch, _myRabbitMQ_durable_queue, _myRabbitMQ_durable_exchange, _myRabbitMQ_connection, _myRabbitMQ_channel, _myRabbitMQ_queue, _myRabbitMQ_exchange, _myRabbitMQ_routingKey, _myRabbitMQ_topicKey, _myRabbitMQ_connect_opts, _myRabbitMQ_queue_name, _myRabbitMQ_queue_opts, _myRabbitMQ_consume_opts, _myRabbitMQ_sendToQueue_opts, _myRabbitMQ_publish_opts, _myRabbitMQ_myRabbitMQ_is_running, _myRabbitMQ_fnopts;
+var _myRabbitMQ_context, _myRabbitMQ_hostname, _myRabbitMQ_port, _myRabbitMQ_username, _myRabbitMQ_password, _myRabbitMQ_timeout_reconnect, _myRabbitMQ_url, _myRabbitMQ_exchange_name, _myRabbitMQ_exchange_type, _myRabbitMQ_exchange_opts, _myRabbitMQ_ttl, _myRabbitMQ_prefetch, _myRabbitMQ_durable_queue, _myRabbitMQ_durable_exchange, _myRabbitMQ_connection, _myRabbitMQ_channel, _myRabbitMQ_queue, _myRabbitMQ_exchange, _myRabbitMQ_routingKey, _myRabbitMQ_topicKey, _myRabbitMQ_connect_opts, _myRabbitMQ_queue_name, _myRabbitMQ_queue_opts, _myRabbitMQ_consume_opts, _myRabbitMQ_sendToQueue_opts, _myRabbitMQ_publish_opts, _myRabbitMQ_myRabbitMQ_is_running, _myRabbitMQ_fnopts;
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.myRabbitMQProducer = exports.myRabbitMQConsumer = void 0;
 const amqplib_1 = __importStar(require("amqplib"));
-const timeout = 250;
+const timeout_reconnect = 150;
 const ttl = 60000;
 const prefetch = 20;
 const port = 5672;
@@ -45,7 +45,7 @@ const durable_queue = true;
 const durable_exchange = true;
 const exchange_name = 'exchange';
 const exchange_type = 'fanout';
-const queue_name = '';
+const queue_name = undefined;
 var DEBUG = false;
 class myRabbitMQ {
     constructor(context, fnopts) {
@@ -54,7 +54,7 @@ class myRabbitMQ {
         _myRabbitMQ_port.set(this, void 0);
         _myRabbitMQ_username.set(this, void 0);
         _myRabbitMQ_password.set(this, void 0);
-        _myRabbitMQ_timeout.set(this, void 0);
+        _myRabbitMQ_timeout_reconnect.set(this, void 0);
         _myRabbitMQ_url.set(this, void 0);
         _myRabbitMQ_exchange_name.set(this, void 0);
         _myRabbitMQ_exchange_type.set(this, void 0);
@@ -93,7 +93,7 @@ class myRabbitMQ {
         __classPrivateFieldSet(this, _myRabbitMQ_port, __classPrivateFieldGet(this, _myRabbitMQ_fnopts, "f")?.port || Number(process.env.RABBITMQ_PORT) || port, "f");
         __classPrivateFieldSet(this, _myRabbitMQ_username, __classPrivateFieldGet(this, _myRabbitMQ_fnopts, "f")?.username || process.env.RABBITMQ_DEFAULT_USER || 'guest', "f");
         __classPrivateFieldSet(this, _myRabbitMQ_password, __classPrivateFieldGet(this, _myRabbitMQ_fnopts, "f")?.password || process.env.RABBITMQ_DEFAULT_PASS || 'guest', "f");
-        __classPrivateFieldSet(this, _myRabbitMQ_timeout, __classPrivateFieldGet(this, _myRabbitMQ_fnopts, "f")?.timeout || Number(process.env.RABBITMQ_TIMEOUT) || timeout, "f");
+        __classPrivateFieldSet(this, _myRabbitMQ_timeout_reconnect, __classPrivateFieldGet(this, _myRabbitMQ_fnopts, "f")?.timeout || Number(process.env.RABBITMQ_TIMEOUT) || timeout_reconnect, "f");
         __classPrivateFieldSet(this, _myRabbitMQ_queue_name, __classPrivateFieldGet(this, _myRabbitMQ_fnopts, "f")?.queue_name || process.env.RABBITMQ_QUEUE_NAME || queue_name, "f");
         __classPrivateFieldSet(this, _myRabbitMQ_ttl, __classPrivateFieldGet(this, _myRabbitMQ_fnopts, "f")?.ttl || Number(process.env.RABBITMQ_TTL) || ttl, "f");
         __classPrivateFieldSet(this, _myRabbitMQ_url, __classPrivateFieldGet(this, _myRabbitMQ_fnopts, "f")?.url || process.env.RABBITMQ_URL || `amqp://${__classPrivateFieldGet(this, _myRabbitMQ_hostname, "f")}:${__classPrivateFieldGet(this, _myRabbitMQ_port, "f")}`, "f");
@@ -131,7 +131,7 @@ class myRabbitMQ {
         port = ${__classPrivateFieldGet(this, _myRabbitMQ_port, "f")}
         username = ${__classPrivateFieldGet(this, _myRabbitMQ_username, "f")}
         password = ${__classPrivateFieldGet(this, _myRabbitMQ_password, "f")}
-        timeout = ${__classPrivateFieldGet(this, _myRabbitMQ_timeout, "f")}
+        timeout = ${__classPrivateFieldGet(this, _myRabbitMQ_timeout_reconnect, "f")}
         queue_name = ${__classPrivateFieldGet(this, _myRabbitMQ_queue_name, "f")}
         ttl = ${__classPrivateFieldGet(this, _myRabbitMQ_ttl, "f")}
         url = ${__classPrivateFieldGet(this, _myRabbitMQ_url, "f")}
@@ -221,7 +221,7 @@ class myRabbitMQ {
                     if (DEBUG === true)
                         console.debug(error);
                     await this.setup();
-                }, __classPrivateFieldGet(this, _myRabbitMQ_timeout, "f"));
+                }, __classPrivateFieldGet(this, _myRabbitMQ_timeout_reconnect, "f"));
             }
         });
     }
@@ -274,15 +274,19 @@ class myRabbitMQ {
                     if (DEBUG === true)
                         console.debug(error);
                     await this.setup();
-                }, __classPrivateFieldGet(this, _myRabbitMQ_timeout, "f"));
+                }, __classPrivateFieldGet(this, _myRabbitMQ_timeout_reconnect, "f"));
             }
         });
     }
     async queue(value) {
         return new Promise(async (resolve, reject) => {
+            if (typeof this.queue_name === 'undefined') {
+                __classPrivateFieldSet(this, _myRabbitMQ_queue, undefined, "f");
+                resolve(__classPrivateFieldGet(this, _myRabbitMQ_queue, "f"));
+            }
             try {
                 const channel = await this.channel();
-                if (typeof __classPrivateFieldGet(this, _myRabbitMQ_queue, "f") === 'undefined') {
+                if (typeof __classPrivateFieldGet(this, _myRabbitMQ_queue, "f") === 'undefined' && typeof this.queue_name === 'string') {
                     __classPrivateFieldSet(this, _myRabbitMQ_queue, value ? value : await channel.assertQueue(this.queue_name, this.queue_opts), "f");
                     console.log(`${this.context}: myRabbitMQ.queue() - queue asserted:`);
                     if (DEBUG === true)
@@ -299,11 +303,21 @@ class myRabbitMQ {
     }
     async exchange(value) {
         return new Promise(async (resolve, reject) => {
+            if (typeof this.exchange_name === 'undefined' || typeof this.exchange_type === 'undefined') {
+                this.exchange_type = undefined;
+                this.exchange_name = undefined;
+                __classPrivateFieldSet(this, _myRabbitMQ_exchange, undefined, "f");
+                resolve(__classPrivateFieldGet(this, _myRabbitMQ_exchange, "f"));
+            }
             try {
-                if (typeof __classPrivateFieldGet(this, _myRabbitMQ_exchange, "f") === 'undefined') {
+                if (typeof __classPrivateFieldGet(this, _myRabbitMQ_exchange, "f") === 'undefined'
+                    && typeof this.exchange_name === 'string' && this.exchange_name.length > 0
+                    && typeof this.exchange_type === 'string') {
                     const channel = await this.channel();
+                    console.log(`channel.assertExchange(${this.exchange_name}, ${this.exchange_type}, this.exchange_opts)`);
                     __classPrivateFieldSet(this, _myRabbitMQ_exchange, value ? value : await channel.assertExchange(this.exchange_name, this.exchange_type, this.exchange_opts), "f");
-                    if (__classPrivateFieldGet(this, _myRabbitMQ_exchange_type, "f") != 'fanout') {
+                    if (__classPrivateFieldGet(this, _myRabbitMQ_exchange_type, "f") != 'fanout' && typeof this.queue_name === 'string') {
+                        console.log(`channel.bindQueue(${this.queue_name}, ${this.exchange_name}, ${this.routingKey})`);
                         await channel.bindQueue(this.queue_name, this.exchange_name, this.routingKey);
                     }
                     console.log(`${this.context}: myRabbitMQ.exchange() - exchange asserted:`);
@@ -332,23 +346,23 @@ class myRabbitMQ {
                 resolve(channel);
             }
             catch (error) {
+                this.myRabbitMQ_is_running = false;
                 console.error(error);
             }
         });
     }
 }
-_myRabbitMQ_context = new WeakMap(), _myRabbitMQ_hostname = new WeakMap(), _myRabbitMQ_port = new WeakMap(), _myRabbitMQ_username = new WeakMap(), _myRabbitMQ_password = new WeakMap(), _myRabbitMQ_timeout = new WeakMap(), _myRabbitMQ_url = new WeakMap(), _myRabbitMQ_exchange_name = new WeakMap(), _myRabbitMQ_exchange_type = new WeakMap(), _myRabbitMQ_exchange_opts = new WeakMap(), _myRabbitMQ_ttl = new WeakMap(), _myRabbitMQ_prefetch = new WeakMap(), _myRabbitMQ_durable_queue = new WeakMap(), _myRabbitMQ_durable_exchange = new WeakMap(), _myRabbitMQ_connection = new WeakMap(), _myRabbitMQ_channel = new WeakMap(), _myRabbitMQ_queue = new WeakMap(), _myRabbitMQ_exchange = new WeakMap(), _myRabbitMQ_routingKey = new WeakMap(), _myRabbitMQ_topicKey = new WeakMap(), _myRabbitMQ_connect_opts = new WeakMap(), _myRabbitMQ_queue_name = new WeakMap(), _myRabbitMQ_queue_opts = new WeakMap(), _myRabbitMQ_consume_opts = new WeakMap(), _myRabbitMQ_sendToQueue_opts = new WeakMap(), _myRabbitMQ_publish_opts = new WeakMap(), _myRabbitMQ_myRabbitMQ_is_running = new WeakMap(), _myRabbitMQ_fnopts = new WeakMap();
+_myRabbitMQ_context = new WeakMap(), _myRabbitMQ_hostname = new WeakMap(), _myRabbitMQ_port = new WeakMap(), _myRabbitMQ_username = new WeakMap(), _myRabbitMQ_password = new WeakMap(), _myRabbitMQ_timeout_reconnect = new WeakMap(), _myRabbitMQ_url = new WeakMap(), _myRabbitMQ_exchange_name = new WeakMap(), _myRabbitMQ_exchange_type = new WeakMap(), _myRabbitMQ_exchange_opts = new WeakMap(), _myRabbitMQ_ttl = new WeakMap(), _myRabbitMQ_prefetch = new WeakMap(), _myRabbitMQ_durable_queue = new WeakMap(), _myRabbitMQ_durable_exchange = new WeakMap(), _myRabbitMQ_connection = new WeakMap(), _myRabbitMQ_channel = new WeakMap(), _myRabbitMQ_queue = new WeakMap(), _myRabbitMQ_exchange = new WeakMap(), _myRabbitMQ_routingKey = new WeakMap(), _myRabbitMQ_topicKey = new WeakMap(), _myRabbitMQ_connect_opts = new WeakMap(), _myRabbitMQ_queue_name = new WeakMap(), _myRabbitMQ_queue_opts = new WeakMap(), _myRabbitMQ_consume_opts = new WeakMap(), _myRabbitMQ_sendToQueue_opts = new WeakMap(), _myRabbitMQ_publish_opts = new WeakMap(), _myRabbitMQ_myRabbitMQ_is_running = new WeakMap(), _myRabbitMQ_fnopts = new WeakMap();
 class myRabbitMQConsumer extends myRabbitMQ {
-    constructor(context, fnopts, cb) {
+    constructor(context, fnopts) {
         super(context, fnopts);
-        if (typeof cb != 'undefined')
-            this.consume(cb);
     }
     async init() {
         console.log(`${this.context}: myRabbitMQConsumer.init() - initializing instance...`);
         return new Promise(async (resolve, reject) => {
             try {
-                resolve(await this.setup());
+                const channel = await this.setup();
+                resolve(channel);
             }
             catch (error) {
                 reject(`${this.context}: myRabbitMQConsumer.init(): ${error}`);
@@ -359,34 +373,37 @@ class myRabbitMQConsumer extends myRabbitMQ {
         console.log(`${this.context}: myRabbitMQConsumer.consume() - run instance...`);
         return new Promise(async (resolve, reject) => {
             try {
-                if (this.myRabbitMQ_is_running === false)
-                    await this.init();
                 const channel = await this.channel();
                 const queue = await this.queue();
                 await this.exchange();
-                await channel.consume(queue.queue, async (message) => {
-                    console.log(`${this.context}: myRabbitMQConsumer.consume()->consume() - working on message...`);
-                    let obj;
-                    if (message?.content) {
-                        // TODO: Validate message schema
-                        obj = JSON.parse(message.content.toString());
-                        channel.ack(message);
-                    }
-                    else {
-                        reject(`${this.context}: myRabbitMQConsumer.consume()->consume() error: No content`);
-                    }
-                    if (typeof cb === 'undefined') {
-                        resolve(obj);
-                    }
-                    else {
-                        try {
-                            resolve(cb(obj));
+                if (typeof queue === 'undefined') {
+                    reject(`${this.context}: No queue defined. You must pass "queue_name" key inside options`);
+                }
+                else {
+                    await channel.consume(queue.queue, async (message) => {
+                        console.log(`${this.context}: myRabbitMQConsumer.consume()->consume() - working on message...`);
+                        let obj;
+                        if (message?.content) {
+                            // TODO: Validate message schema
+                            obj = JSON.parse(message.content.toString());
+                            channel.ack(message);
                         }
-                        catch (error) {
-                            reject(`${this.context}: myRabbitMQConsumer.consume()->consume()->cb() error: ${error}`);
+                        else {
+                            reject(`${this.context}: myRabbitMQConsumer.consume()->consume() error: No content`);
                         }
-                    }
-                }, this.consume_opts);
+                        if (typeof cb === 'undefined') {
+                            resolve(obj);
+                        }
+                        else {
+                            try {
+                                resolve(cb(obj));
+                            }
+                            catch (error) {
+                                reject(`${this.context}: myRabbitMQConsumer.consume()->consume()->cb() error: ${error}`);
+                            }
+                        }
+                    }, this.consume_opts);
+                }
             }
             catch (error) {
                 reject(error);
@@ -396,10 +413,8 @@ class myRabbitMQConsumer extends myRabbitMQ {
 }
 exports.myRabbitMQConsumer = myRabbitMQConsumer;
 class myRabbitMQProducer extends myRabbitMQ {
-    constructor(context, fnopts, obj, cb) {
+    constructor(context, fnopts) {
         super(context, fnopts);
-        if (typeof obj != 'undefined' && typeof cb != 'undefined')
-            this.produce(obj, cb);
     }
     async init() {
         console.log(`${this.context}: myRabbitMQProducer.init() - initializing instance...`);
@@ -416,8 +431,6 @@ class myRabbitMQProducer extends myRabbitMQ {
         console.log(`${this.context}: myRabbitMQProducer.produce() - run instance...`);
         return new Promise(async (resolve, reject) => {
             try {
-                if (this.myRabbitMQ_is_running === false)
-                    await this.init();
                 if (Object.entries(obj).length === 0)
                     reject(`${this.context}: myRabbitMQProducer.produce() - No obj{}`);
                 var message = JSON.stringify(obj);
@@ -425,8 +438,7 @@ class myRabbitMQProducer extends myRabbitMQ {
                     reject(`${this.context}: myRabbitMQProducer.produce() - No message`);
                 const channel = await this.channel();
                 const queue = await this.queue();
-                await this.exchange();
-                if (this.exchange_type === 'fanout') {
+                if (typeof queue != 'undefined') {
                     channel.sendToQueue(queue.queue, Buffer.from(message), this.sendToQueue_opts, async (error) => {
                         console.log(`${this.context}: myRabbitMQProducer.produce()->sendToQueue() - working on message...`);
                         if (error !== null) {
@@ -449,26 +461,34 @@ class myRabbitMQProducer extends myRabbitMQ {
                     });
                 }
                 else {
-                    channel.publish(this.exchange_name, this.routingKey, Buffer.from(message), this.publish_opts, async (error) => {
-                        console.log(`${this.context}: myRabbitMQProducer.produce()->publish() - working on message...`);
-                        if (error !== null) {
-                            reject(`${this.context}: myRabbitMQProducer.produce()->publish() error: ${error}`);
-                        }
-                        else {
-                            console.log(this.context, ': Message published on queue!');
-                            if (typeof cb != 'undefined') {
-                                try {
-                                    resolve(cb(obj));
+                    const exchange = await this.exchange();
+                    if (typeof exchange === 'undefined') {
+                        reject(`${this.context}: No exchange defined. You must pass "exchange_name" and "exchange_type" keys inside options`);
+                    }
+                    else {
+                        if (typeof this.exchange_name != 'undefined') {
+                            channel.publish(this.exchange_name, this.routingKey, Buffer.from(message), this.publish_opts, async (error) => {
+                                console.log(`${this.context}: myRabbitMQProducer.produce()->publish() - working on message...`);
+                                if (error !== null) {
+                                    reject(`${this.context}: myRabbitMQProducer.produce()->publish() error: ${error}`);
                                 }
-                                catch (error) {
-                                    reject(`${this.context}: myRabbitMQProducer.produce()->publish()->cb() error: ${error}`);
+                                else {
+                                    console.log(this.context, ': Message published on queue!');
+                                    if (typeof cb != 'undefined') {
+                                        try {
+                                            resolve(cb(obj));
+                                        }
+                                        catch (error) {
+                                            reject(`${this.context}: myRabbitMQProducer.produce()->publish()->cb() error: ${error}`);
+                                        }
+                                    }
+                                    else {
+                                        resolve(message);
+                                    }
                                 }
-                            }
-                            else {
-                                resolve(message);
-                            }
+                            });
                         }
-                    });
+                    }
                 }
                 await channel.waitForConfirms();
                 console.log(`Message sent to exchange confirmed`, message);
@@ -480,3 +500,4 @@ class myRabbitMQProducer extends myRabbitMQ {
     }
 }
 exports.myRabbitMQProducer = myRabbitMQProducer;
+// vim: set tabstop=2 shiftwidth=2 expandtab colorcolumn=101 :
